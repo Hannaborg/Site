@@ -16,6 +16,11 @@ function convertMarkdownToHtml(markdown) {
 
 // Process all markdown files
 async function build() {
+    // Copy index.html directly
+    if (fs.existsSync('src/content/index.html')) {
+        await fs.copy('src/content/index.html', 'public/index.html');
+    }
+
     // Read all markdown files
     const files = await fs.readdir('src/content');
     
