@@ -1,0 +1,14 @@
+{
+  "name": "simple-static-site",
+  "version": "1.0.0",
+  "description": "A simple static site with markdown support",
+  "main": "src/build.js",
+  "scripts": {
+    "build": "node src/build.js",
+    "serve": "npx serve public"
+  },
+  "dependencies": {
+    "marked": "^9.1.0",
+    "fs-extra": "^11.1.1"
+  }
+} 
