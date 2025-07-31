@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} | Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    {{nav}}
+    <main>
+        <section class="hero">
+            <div class="hero-title">
+                Blog
+            </div>
+        </section>
+        
+        <section class="blog-content">
+            <!-- Newsletter Trigger Button -->
+            <div class="newsletter-trigger">
+                <button id="newsletter-btn" class="newsletter-button">Subscribe to Newsletter</button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search posts...">
+            </div>
+            
+            <article>
+                {{content}}
+            </article>
+        </section>
+        
+        <!-- Newsletter Popup Modal -->
+        <div id="newsletter-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="newsletter-signup">
+                    <h3>Subscribe to my newsletter</h3>
+                    <p>Get notified when I publish new posts.</p>
+                    <div class="convertkit-form">
+                        {{convertkit}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {{footer}}
+    
+    <script>
+        // Newsletter Modal Functionality
+        const modal = document.getElementById('newsletter-modal');
+        const btn = document.getElementById('newsletter-btn');
+        const span = document.getElementsByClassName('close')[0];
+        
+        // Open modal when button is clicked
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        }
+        
+        // Close modal when X is clicked
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Search Functionality
+        const searchInput = document.getElementById('search-input');
+        const blogList = document.querySelector('.blog-content ul');
+        const blogItems = document.querySelectorAll('.blog-content li');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            blogItems.forEach(item => {
+                const title = item.querySelector('a').textContent.toLowerCase();
+                const date = item.querySelector('span').textContent.toLowerCase();
+                
+                if (searchTerm === '' || title.includes(searchTerm) || date.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    item.style.opacity = '1';
+                } else {
+                    item.style.opacity = '0.3';
+                    item.style.display = 'block';
+                }
+            });
+            
+            // Show "no results" message if no matches
+            const visibleItems = Array.from(blogItems).filter(item => 
+                item.style.opacity !== '0.3'
+            );
+            
+            let noResultsMsg = document.getElementById('no-results');
+            if (visibleItems.length === 0 && searchTerm !== '') {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('li');
+                    noResultsMsg.id = 'no-results';
+                    noResultsMsg.innerHTML = '<span style="color: var(--secondary); font-style: italic;">No posts found matching "' + searchTerm + '"</span>';
+                    noResultsMsg.style.textAlign = 'center';
+                    noResultsMsg.style.marginTop = '2rem';
+                    blogList.appendChild(noResultsMsg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        });
+        
+        // Clear search when input is cleared
+        searchInput.addEventListener('blur', function() {
+            if (this.value === '') {
+                blogItems.forEach(item => {
+                    item.style.opacity = '1';
+                });
+                const noResultsMsg = document.getElementById('no-results');
+                if (noResultsMsg) {
+                    noResultsMsg.remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

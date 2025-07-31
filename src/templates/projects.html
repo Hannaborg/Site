@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} | Projects</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    {{nav}}
+    <main>
+        <section class="hero">
+            <div class="hero-title">
+                Projects
+            </div>
+        </section>
+        
+        <section class="projects-content">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search projects...">
+            </div>
+            
+            <article>
+                {{content}}
+            </article>
+        </section>
+    </main>
+    {{footer}}
+    
+    <script>
+        // Search Functionality
+        const searchInput = document.getElementById('search-input');
+        const projectsList = document.querySelector('.projects-content ul');
+        const projectsItems = document.querySelectorAll('.projects-content li');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            projectsItems.forEach(item => {
+                const title = item.querySelector('a').textContent.toLowerCase();
+                const description = item.querySelector('p') ? item.querySelector('p').textContent.toLowerCase() : '';
+                const tags = item.querySelector('.tags') ? item.querySelector('.tags').textContent.toLowerCase() : '';
+                
+                if (searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm) || tags.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    item.style.opacity = '1';
+                } else {
+                    item.style.opacity = '0.3';
+                    item.style.display = 'block';
+                }
+            });
+            
+            // Show "no results" message if no matches
+            const visibleItems = Array.from(projectsItems).filter(item => 
+                item.style.opacity !== '0.3'
+            );
+            
+            let noResultsMsg = document.getElementById('no-results');
+            if (visibleItems.length === 0 && searchTerm !== '') {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('li');
+                    noResultsMsg.id = 'no-results';
+                    noResultsMsg.innerHTML = '<span style="color: var(--secondary); font-style: italic;">No projects found matching "' + searchTerm + '"</span>';
+                    noResultsMsg.style.textAlign = 'center';
+                    noResultsMsg.style.marginTop = '2rem';
+                    projectsList.appendChild(noResultsMsg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        });
+        
+        // Clear search when input is cleared
+        searchInput.addEventListener('blur', function() {
+            if (this.value === '') {
+                projectsItems.forEach(item => {
+                    item.style.opacity = '1';
+                });
+                const noResultsMsg = document.getElementById('no-results');
+                if (noResultsMsg) {
+                    noResultsMsg.remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

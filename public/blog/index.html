@@ -1,45 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog | Hanna</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <!-- Or if you use .png: -->
-  <link rel="icon" href="/favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <nav>
+    <nav>
     <div class="nav-content">
-      <a href="/" class="logo">Hanna</a>
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/contact/">Contact</a></li>
-        <li><button class="get-in-touch">Get in touch</button></li>
-      </ul>
+        <a href="/" class="logo">Hanna</a>
+        <ul class="nav-links">
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="mailto:hanna.r.borg@gmail.com" class="contact-link">Contact</a></li>
+
+        </ul>
     </div>
-  </nav>
-  <main style="max-width:700px; margin:0 auto; padding:4rem 1rem 2rem 1rem;">
-    <h1 class="section-title">Blog</h1>
+</nav> 
+    <main>
+        <section class="hero">
+            <div class="hero-title">
+                Blog
+            </div>
+        </section>
+        
+        <section class="blog-content">
+            <!-- Newsletter Trigger Button -->
+            <div class="newsletter-trigger">
+                <button id="newsletter-btn" class="newsletter-button">Subscribe to Newsletter</button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search posts...">
+            </div>
+            
+            <article>
+                
     <ul style="list-style:none; padding:0;">
       
         <li style="margin-bottom:2rem;">
-          <a href="/blog/first-post.html" style="font-size:1.5rem; font-family:var(--font-serif); color:var(--primary);">NYC Burger List</a><br>
-          <span style="color:#888; font-size:0.95rem;">2025-06-08</span>
+          <a href="/blog/first-post.html" style="font-size:1rem; font-family:var(--font-sans); color:var(--primary); font-weight:300; text-transform:uppercase; letter-spacing:0.1em;">NYC Burger List</a><br>
+          <span style="color:#888; font-size:0.95rem;">Last updated June 7 2025</span>
         </li>
       
         <li style="margin-bottom:2rem;">
-          <a href="/blog/second-post.html" style="font-size:1.5rem; font-family:var(--font-serif); color:var(--primary);">Another Post</a><br>
-          <span style="color:#888; font-size:0.95rem;">2024-04-21</span>
+          <a href="/blog/second-post.html" style="font-size:1rem; font-family:var(--font-sans); color:var(--primary); font-weight:300; text-transform:uppercase; letter-spacing:0.1em;">Another Post</a><br>
+          <span style="color:#888; font-size:0.95rem;">Last updated April 20 2024</span>
         </li>
       
     </ul>
-  </main>
-  <footer>
-    <p>&copy; 2024 Hanna. All rights reserved.</p>
-  </footer>
+            </article>
+        </section>
+        
+        <!-- Newsletter Popup Modal -->
+        <div id="newsletter-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="newsletter-signup">
+                    <h3>Subscribe to my newsletter</h3>
+                    <p>Get notified when I publish new posts.</p>
+                    <div class="convertkit-form">
+                        <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+<form action="https://app.kit.com/forms/8161087/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="8161087" data-uid="69152ac2b5" data-format="inline" data-version="5" data-options="{&quot;settings&quot;:{&quot;after_subscribe&quot;:{&quot;action&quot;:&quot;message&quot;,&quot;success_message&quot;:&quot;Success! Now check your email to confirm your subscription.&quot;,&quot;redirect_url&quot;:&quot;&quot;},&quot;analytics&quot;:{&quot;google&quot;:null,&quot;fathom&quot;:null,&quot;facebook&quot;:null,&quot;segment&quot;:null,&quot;pinterest&quot;:null,&quot;sparkloop&quot;:null,&quot;googletagmanager&quot;:null},&quot;modal&quot;:{&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15},&quot;powered_by&quot;:{&quot;show&quot;:true,&quot;url&quot;:&quot;https://kit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic&quot;},&quot;recaptcha&quot;:{&quot;enabled&quot;:false},&quot;return_visitor&quot;:{&quot;action&quot;:&quot;show&quot;,&quot;custom_content&quot;:&quot;&quot;},&quot;slide_in&quot;:{&quot;display_in&quot;:&quot;bottom_right&quot;,&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15},&quot;sticky_bar&quot;:{&quot;display_in&quot;:&quot;top&quot;,&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15}},&quot;version&quot;:&quot;5&quot;}" min-width="400 500 600 700 800">
+    <div data-style="clean">
+        <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+        <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
+            <div class="formkit-field">
+                <input class="formkit-input" name="email_address" aria-label="Email Address" placeholder="Email Address" required="" type="email" style="color: rgb(0, 0, 0); border-color: rgb(227, 227, 227); border-radius: 4px; font-weight: 400;">
+            </div>
+            <button data-element="submit" class="formkit-submit formkit-submit" style="color: rgb(255, 255, 255); background-color: rgb(22, 119, 190); border-radius: 4px; font-weight: 400;">
+                <div class="formkit-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <span class="">Subscribe</span>
+            </button>
+        </div>
+        <div class="formkit-powered-by-convertkit-container">
+            <a href="https://kit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic" data-element="powered-by" class="formkit-powered-by-convertkit" data-variant="dark" target="_blank" rel="nofollow">Built with Kit</a>
+        </div>
+    </div>
+</form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+    <div class="footer-content">
+        <p>&copy; 2024 Hanna. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/hannaborg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://github.com/Hannaborg" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/hannnaborg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</footer> 
+    
+    <script>
+        // Newsletter Modal Functionality
+        const modal = document.getElementById('newsletter-modal');
+        const btn = document.getElementById('newsletter-btn');
+        const span = document.getElementsByClassName('close')[0];
+        
+        // Open modal when button is clicked
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        }
+        
+        // Close modal when X is clicked
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Search Functionality
+        const searchInput = document.getElementById('search-input');
+        const blogList = document.querySelector('.blog-content ul');
+        const blogItems = document.querySelectorAll('.blog-content li');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            blogItems.forEach(item => {
+                const title = item.querySelector('a').textContent.toLowerCase();
+                const date = item.querySelector('span').textContent.toLowerCase();
+                
+                if (searchTerm === '' || title.includes(searchTerm) || date.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    item.style.opacity = '1';
+                } else {
+                    item.style.opacity = '0.3';
+                    item.style.display = 'block';
+                }
+            });
+            
+            // Show "no results" message if no matches
+            const visibleItems = Array.from(blogItems).filter(item => 
+                item.style.opacity !== '0.3'
+            );
+            
+            let noResultsMsg = document.getElementById('no-results');
+            if (visibleItems.length === 0 && searchTerm !== '') {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('li');
+                    noResultsMsg.id = 'no-results';
+                    noResultsMsg.innerHTML = '<span style="color: var(--secondary); font-style: italic;">No posts found matching "' + searchTerm + '"</span>';
+                    noResultsMsg.style.textAlign = 'center';
+                    noResultsMsg.style.marginTop = '2rem';
+                    blogList.appendChild(noResultsMsg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        });
+        
+        // Clear search when input is cleared
+        searchInput.addEventListener('blur', function() {
+            if (this.value === '') {
+                blogItems.forEach(item => {
+                    item.style.opacity = '1';
+                });
+                const noResultsMsg = document.getElementById('no-results');
+                if (noResultsMsg) {
+                    noResultsMsg.remove();
+                }
+            }
+        });
+    </script>
 </body>
-</html>
+</html> 
