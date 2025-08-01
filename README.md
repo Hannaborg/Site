@@ -1,35 +1,44 @@
-# Personal Portfolio & Blog Site
+# Site - Personal Portfolio & Blog
 
-A static site generator built with Node.js that creates a personal portfolio and blog from Markdown files.
+A simple static site built with HTML, CSS, and Node.js for a personal portfolio and blog.
 
-## Features
+## Site Specification
 
-- **Static Site Generation**: Converts Markdown files to HTML using a custom build script
-- **Blog System**: Supports blog posts with frontmatter metadata (title, date)
-- **Portfolio Pages**: Dedicated project showcase with individual project pages
-- **Newsletter Integration**: ConvertKit email subscription form embedded in blog
-- **Responsive Design**: Clean, minimal CSS with mobile-friendly layout
-- **GitHub Pages Deployment**: Automated deployment via GitHub Actions
+### Structure
+- **Home Page**: Landing page with navigation and footer
+- **Blog**: Collection of markdown posts with newsletter signup
+- **Projects**: Portfolio of project pages
+- **Static Assets**: CSS styling and images
 
-## Tech Stack
+### Features
+- **Markdown Support**: Blog posts and project pages written in markdown with frontmatter
+- **Newsletter Integration**: ConvertKit email signup forms
+- **Responsive Design**: Mobile-friendly layout
+- **GitHub Pages**: Automated deployment via GitHub Actions
+- **Simple Build Process**: Node.js build script converts markdown to HTML
 
-- **Build Tool**: Custom Node.js script with `marked` for Markdown parsing
-- **Styling**: Vanilla CSS with CSS custom properties
-- **Templates**: HTML templates with placeholder replacement
-- **Deployment**: GitHub Pages with automated build workflow
-
-## Structure
-
+### File Structure
 ```
-src/
-├── content/          # Markdown content (blog posts, projects)
-├── templates/        # HTML templates
-└── css/             # Stylesheets
-public/              # Generated static files
+Site/
+├── src/
+│   ├── content/          # Markdown content
+│   │   ├── blog/         # Blog posts
+│   │   └── projects/     # Project pages
+│   ├── templates/        # HTML templates
+│   └── css/             # Stylesheets
+├── public/              # Built site (deployed)
+├── build.js            # Build script
+└── package.json        # Dependencies
 ```
 
-## Usage
+### Development
+```bash
+npm install              # Install dependencies
+npm run build           # Build the site
+npm run serve           # Serve locally
+```
 
-1. Add Markdown files to `src/content/`
-2. Run `npm run build` to generate static site
-3. Deploy to GitHub Pages automatically on push to main branch
+### Deployment
+- Automatically deploys to GitHub Pages on push to main branch
+- Build process runs via GitHub Actions
+- Site available at: https://hannaborg.github.io/Site/
