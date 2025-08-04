@@ -64,8 +64,15 @@ async function build() {
                 .replace(/{{title}}/g, title)
                 .replace(/{{nav}}/g, navTemplate)
                 .replace(/{{footer}}/g, footerTemplate);
-            const outputFile = file.replace('.md', '.html');
-            await fs.writeFile(path.join('public', outputFile), pageHtml);
+            
+            // For projects.md, create it as projects/index.html instead of projects.html
+            if (file === 'projects.md') {
+                await fs.ensureDir('public/projects');
+                await fs.writeFile('public/projects/index.html', pageHtml);
+            } else {
+                const outputFile = file.replace('.md', '.html');
+                await fs.writeFile(path.join('public', outputFile), pageHtml);
+            }
         }
     }
 
@@ -93,7 +100,7 @@ async function build() {
         blogPosts.push({
             title,
             date,
-            url: `/Site/blog/${outputFile}`
+            url: `/blog/${outputFile}`
         });
     }
     // Sort blog posts by date descending
