@@ -163,7 +163,7 @@ async function build() {
 
     // Copy CSS assets if they exist
     if (fs.existsSync('src/css')) {
-        await fs.copy('src/css/css', 'public/css', { overwrite: true });
+        await fs.copy('src/css', 'public/css', { overwrite: true });
     }
 }
 
