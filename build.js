@@ -100,7 +100,7 @@ async function build() {
         blogPosts.push({
             title,
             date,
-            url: `/blog/${outputFile}`
+            url: `/Site/blog/${outputFile}`
         });
     }
     // Sort blog posts by date descending
