@@ -41,4 +41,4 @@ npm run serve           # Serve locally
 ### Deployment
 - Automatically deploys to GitHub Pages on push to main branch
 - Build process runs via GitHub Actions
-- Site available at: https://hannaborg.github.io/Site/
+- Site available at: https://hannaborg.github.io/Site/# Updated Mon Aug  4 12:09:22 EDT 2025
