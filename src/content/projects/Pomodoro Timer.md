@@ -1,3 +1,7 @@
+---
+title: Pomodoro Timer
+---
+
 # Pomodoro Timer
 
 A clean, minimalist Pomodoro timer application designed to help users maintain focus and productivity through structured work sessions.
