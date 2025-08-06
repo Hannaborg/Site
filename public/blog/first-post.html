@@ -32,107 +32,218 @@
 <h2>Why Burgers?</h2>
 <p>I&#39;m a big fan of burgers. I&#39;ve been eating burgers since I was a kid. I&#39;ve tried burgers from all over the world, but I&#39;ve never found a burger that I liked as much as the burgers in NYC.</p>
 <hr>
-<h2>🍔 Random Burger Pics</h2>
-<div id="burger-images-container"></div>
+<h2>🍔 Burger Photo Carousel</h2>
+<div id="burger-carousel-container">
+    <div id="carousel-wrapper">
+        <div id="carousel-track"></div>
+        <button id="prev-btn" class="carousel-btn">‹</button>
+        <button id="next-btn" class="carousel-btn">›</button>
+    </div>
+</div>
 
 <script>
-// Random burger image popup functionality
-const burgerImages = [
-    'Tezza-0231.JPG',
-    'Tezza-0284.JPG',
-    'Tezza-0942.JPG',
-    'Tezza-9421.JPG',
-    'Tezza-1465.JPG',
-    'Tezza-3338.JPG',
-    'Tezza-0086.JPG',
-    'Tezza-9197.JPG',
-    'Tezza-0464.JPG',
-    'Tezza-1410.JPG',
-    'Tezza-1024.JPG',
-    'Tezza-5873.JPG',
-    'Tezza-6047.JPG',
-    'Tezza-7845.JPG',
-    'Tezza-8918.JPG',
-    'Tezza-1667.JPG',
-    'Tezza-5703.JPG',
-    'Tezza-4515.JPG'
+// Burger carousel with descriptions
+const burgerData = [
+    {
+        image: 'Tezza-0231.JPG',
+        title: 'Gotham Burger Social Club'
+    },
+    {
+        image: 'Tezza-0284.JPG',
+        title: 'Nowon'
+    },
+    {
+        image: 'Tezza-0942.JPG',
+        title: 'Emmy Squared Pizza'
+    },
+    {
+        image: 'Tezza-9421.JPG',
+        title: 'Nowon'
+    },
+    {
+        image: 'Tezza-1465.JPG',
+        title: 'Hamburger America'
+    },
+    {
+        image: 'Tezza-3338.JPG',
+        title: 'Au Cheval'
+    },
+    {
+        image: 'Tezza-0086.JPG',
+        title: 'Fairfax'
+    },
+    {
+        image: 'Tezza-9197.JPG',
+        title: 'Little Prince'
+    },
+    {
+        image: 'Tezza-0464.JPG',
+        title: 'Red Hook Tavern'
+    },
+    {
+        image: 'Tezza-1410.JPG',
+        title: 'Pastis'
+    },
+    {
+        image: 'Tezza-1024.JPG',
+        title: 'Minetta Tavern'
+    },
+    {
+        image: 'Tezza-5873.JPG',
+        title: '4 Charles'
+    },
+    {
+        image: 'Tezza-6047.JPG',
+        title: 'Lords'
+    },
+    {
+        image: 'Tezza-7845.JPG',
+        title: 'Monkey Bar'
+    },
+    {
+        image: 'Tezza-8918.JPG',
+        title: 'Rafs'
+    },
+    {
+        image: 'Tezza-1667.JPG',
+        title: 'NADC'
+    },
+    {
+        image: 'Tezza-5703.JPG',
+        title: 'Rolos'
+    },
+    {
+        image: 'Tezza-4515.JPG',
+        title: 'Virginias'
+    }
 ];
 
-function createRandomImage() {
-    if (burgerImages.length === 0) {
-        console.log('No burger images found. Please add image filenames to the burgerImages array.');
-        return;
-    }
+let currentIndex = 0;
+let carouselInterval;
+let isPaused = false;
+
+function createCarousel() {
+    const track = document.getElementById('carousel-track');
     
-    const randomImage = burgerImages[Math.floor(Math.random() * burgerImages.length)];
-    const img = document.createElement('img');
-    img.src = `/Site/images/${randomImage}`;
-    img.style.cssText = `
-        position: fixed;
-        width: 200px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        z-index: 1000;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-        left: ${Math.random() * (window.innerWidth - 200)}px;
-        top: ${Math.random() * (window.innerHeight - 150)}px;
-    `;
-    
-    // Add hover effect
-    img.addEventListener('mouseenter', () => {
-        img.style.transform = 'scale(1.1)';
+    burgerData.forEach((burger, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.innerHTML = `
+            <img src="/images/${burger.image}" alt="${burger.title}" data-index="${index}">
+        `;
+        track.appendChild(slide);
+        
+        // No click events - just display images
     });
     
-    img.addEventListener('mouseleave', () => {
-        img.style.transform = 'scale(1)';
-    });
-    
-    // Remove image when clicked
-    img.addEventListener('click', () => {
-        img.remove();
-    });
-    
-    document.body.appendChild(img);
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        if (img.parentNode) {
-            img.remove();
-        }
-    }, 5000);
+    updateCarousel();
+    startCarousel();
 }
 
-// Show random images when page loads
-window.addEventListener('load', () => {
-    // Show 3 random images initially
-    for (let i = 0; i < 3; i++) {
-        setTimeout(() => createRandomImage(), i * 1000);
+function updateCarousel() {
+    const track = document.getElementById('carousel-track');
+    const slideWidth = 300; // Width of each slide
+    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
+
+function nextSlide() {
+    if (!isPaused) {
+        currentIndex = (currentIndex + 1) % burgerData.length;
+        updateCarousel();
     }
+}
+
+function prevSlide() {
+    if (!isPaused) {
+        currentIndex = (currentIndex - 1 + burgerData.length) % burgerData.length;
+        updateCarousel();
+    }
+}
+
+function startCarousel() {
+    carouselInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+}
+
+
+
+// Initialize carousel when page loads
+window.addEventListener('load', () => {
+    createCarousel();
     
-    // Show a new random image every 8 seconds
-    setInterval(createRandomImage, 8000);
+    // Add button event listeners
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
 });
 </script>
 
 <style>
-#burger-images-container {
+#burger-carousel-container {
     margin: 2rem 0;
-    padding: 1rem;
-    background: #f8f8f8;
-    border-radius: 8px;
     text-align: center;
 }
 
-#burger-images-container::before {
-    content: "🍔 Random burger pics will pop up around the page! Click them to dismiss.";
-    display: block;
-    color: #666;
-    font-style: italic;
-    margin-bottom: 1rem;
+#carousel-wrapper {
+    position: relative;
+    width: 300px;
+    height: 225px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
+
+#carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.carousel-slide {
+    min-width: 300px;
+    height: 225px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-slide:hover {
+    transform: scale(1.05);
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: rgba(0,0,0,0.9);
+}
+
+#prev-btn {
+    left: 10px;
+}
+
+#next-btn {
+    right: 10px;
+}
+
+
 </style>
             </article>
         </section>
