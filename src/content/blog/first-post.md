@@ -106,37 +106,59 @@ let carouselInterval;
 function createCarousel() {
     const track = document.getElementById('carousel-track');
     
+    // Create duplicate images for seamless loop
     burgerData.forEach((burger, index) => {
         const slide = document.createElement('div');
         slide.className = 'carousel-slide';
         slide.innerHTML = `
-            <img src="/images/${burger.image}" alt="${burger.title}" data-index="${index}">
+            <img src="/Site/images/${burger.image}" alt="${burger.title}" data-index="${index}">
         `;
         track.appendChild(slide);
     });
     
-    updateCarousel();
+    // Duplicate the first few images at the end for seamless loop
+    for (let i = 0; i < 5; i++) {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.innerHTML = `
+            <img src="/Site/images/${burgerData[i].image}" alt="${burgerData[i].title}" data-index="${i}">
+        `;
+        track.appendChild(slide);
+    }
+    
     startCarousel();
 }
 
 function updateCarousel() {
     const track = document.getElementById('carousel-track');
-    const slideWidth = 250; // Smaller width to show more images
-    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    const slideWidth = 250;
+    const totalWidth = slideWidth * burgerData.length;
+    
+    if (currentIndex >= burgerData.length) {
+        // Reset to beginning for seamless loop
+        currentIndex = 0;
+        track.style.transition = 'none';
+        track.style.transform = `translateX(0px)`;
+        setTimeout(() => {
+            track.style.transition = 'transform 0.5s ease';
+        }, 10);
+    } else {
+        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
 }
 
 function nextSlide() {
-    currentIndex = (currentIndex + 1) % burgerData.length;
+    currentIndex++;
     updateCarousel();
 }
 
 function prevSlide() {
-    currentIndex = (currentIndex - 1 + burgerData.length) % burgerData.length;
+    currentIndex = Math.max(0, currentIndex - 1);
     updateCarousel();
 }
 
 function startCarousel() {
-    carouselInterval = setInterval(nextSlide, 2000); // Change slide every 2 seconds
+    carouselInterval = setInterval(nextSlide, 1500); // Faster movement
 }
 
 
@@ -160,29 +182,35 @@ window.addEventListener('load', () => {
 #carousel-wrapper {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 180px;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    background: linear-gradient(90deg, #f8f8f8 0%, #ffffff 50%, #f8f8f8 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 #carousel-track {
     display: flex;
     transition: transform 0.5s ease;
     height: 100%;
-    gap: 10px;
+    gap: 15px;
+    padding: 10px 0;
 }
 
 .carousel-slide {
-    min-width: 250px;
-    height: 200px;
+    min-width: 220px;
+    height: 160px;
     transition: transform 0.3s ease;
     flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .carousel-slide:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .carousel-slide img {
