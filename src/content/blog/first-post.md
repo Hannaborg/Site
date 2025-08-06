@@ -23,18 +23,6 @@ I'm a big fan of burgers. I've been eating burgers since I was a kid. I've tried
     
     <div id="carousel-wrapper">
         <div id="carousel-track"></div>
-        <div class="carousel-overlay left"></div>
-        <div class="carousel-overlay right"></div>
-        <button id="prev-btn" class="carousel-btn">‹</button>
-        <button id="next-btn" class="carousel-btn">›</button>
-    </div>
-    
-    <div class="carousel-indicators">
-        <span class="indicator active" data-index="0"></span>
-        <span class="indicator" data-index="1"></span>
-        <span class="indicator" data-index="2"></span>
-        <span class="indicator" data-index="3"></span>
-        <span class="indicator" data-index="4"></span>
     </div>
 </div>
 
@@ -151,13 +139,12 @@ function createCarousel() {
         track.appendChild(slide);
     });
     
-    updateIndicators();
     startCarousel();
 }
 
 function updateCarousel() {
     const track = document.getElementById('carousel-track');
-    const slideWidth = 320; // Wider slides to show more content
+    const slideWidth = 280; // Smaller slides for smoother flow
     
     if (currentIndex >= burgerData.length) {
         // Reset to beginning for seamless loop
@@ -165,20 +152,11 @@ function updateCarousel() {
         track.style.transition = 'none';
         track.style.transform = `translateX(0px)`;
         setTimeout(() => {
-            track.style.transition = 'transform 0.8s ease';
+            track.style.transition = 'transform 1.2s ease';
         }, 10);
     } else {
         track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
     }
-    
-    updateIndicators();
-}
-
-function updateIndicators() {
-    const indicators = document.querySelectorAll('.indicator');
-    indicators.forEach((indicator, index) => {
-        indicator.classList.toggle('active', index === currentIndex % 5);
-    });
 }
 
 function nextSlide() {
@@ -186,13 +164,8 @@ function nextSlide() {
     updateCarousel();
 }
 
-function prevSlide() {
-    currentIndex = Math.max(0, currentIndex - 1);
-    updateCarousel();
-}
-
 function startCarousel() {
-    carouselInterval = setInterval(nextSlide, 3000); // Slower, more elegant movement
+    carouselInterval = setInterval(nextSlide, 2000); // Faster, smoother movement
 }
 
 
@@ -200,18 +173,6 @@ function startCarousel() {
 // Initialize carousel when page loads
 window.addEventListener('load', () => {
     createCarousel();
-    
-    // Add button event listeners
-    document.getElementById('prev-btn').addEventListener('click', prevSlide);
-    document.getElementById('next-btn').addEventListener('click', nextSlide);
-    
-    // Add indicator click events
-    document.querySelectorAll('.indicator').forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentIndex = index;
-            updateCarousel();
-        });
-    });
 });
 </script>
 
@@ -241,26 +202,25 @@ window.addEventListener('load', () => {
 
 #carousel-wrapper {
     position: relative;
-    width: 100%;
-    height: 280px;
-    margin: 0 auto;
+    width: 100vw;
+    height: 260px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
     overflow: hidden;
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 }
 
 #carousel-track {
     display: flex;
-    transition: transform 0.8s ease;
+    transition: transform 1.2s ease;
     height: 100%;
-    gap: 20px;
-    padding: 20px;
+    gap: 15px;
+    padding: 20px 0;
 }
 
 .carousel-slide {
-    min-width: 320px;
-    height: 240px;
+    min-width: 280px;
+    height: 220px;
     transition: all 0.4s ease;
     flex-shrink: 0;
     border-radius: 12px;
@@ -309,80 +269,7 @@ window.addEventListener('load', () => {
     font-weight: 600;
 }
 
-.carousel-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    z-index: 5;
-    pointer-events: none;
-}
 
-.carousel-overlay.left {
-    left: 0;
-    background: linear-gradient(90deg, rgba(248,249,250,1) 0%, rgba(248,249,250,0) 100%);
-}
-
-.carousel-overlay.right {
-    right: 0;
-    background: linear-gradient(270deg, rgba(248,249,250,1) 0%, rgba(248,249,250,0) 100%);
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.9);
-    color: #333;
-    border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 24px;
-    z-index: 10;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.carousel-btn:hover {
-    background: rgba(255,255,255,1);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-}
-
-#prev-btn {
-    left: 20px;
-}
-
-#next-btn {
-    right: 20px;
-}
-
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ddd;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator:hover {
-    background: #bbb;
-}
-
-.indicator.active {
-    background: #333;
-    transform: scale(1.2);
-}
 
 
 </style>
