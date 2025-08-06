@@ -13,7 +13,7 @@ I'm a big fan of burgers. I've been eating burgers since I was a kid. I've tried
 
 ---
 
-## 🍔 Burger Photo Carousel
+## 🍔 NYC Burger Collection
 
 <div id="burger-carousel-container">
     <div id="carousel-wrapper">
@@ -102,7 +102,6 @@ const burgerData = [
 
 let currentIndex = 0;
 let carouselInterval;
-let isPaused = false;
 
 function createCarousel() {
     const track = document.getElementById('carousel-track');
@@ -114,8 +113,6 @@ function createCarousel() {
             <img src="/images/${burger.image}" alt="${burger.title}" data-index="${index}">
         `;
         track.appendChild(slide);
-        
-        // No click events - just display images
     });
     
     updateCarousel();
@@ -124,26 +121,22 @@ function createCarousel() {
 
 function updateCarousel() {
     const track = document.getElementById('carousel-track');
-    const slideWidth = 300; // Width of each slide
+    const slideWidth = 250; // Smaller width to show more images
     track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
 function nextSlide() {
-    if (!isPaused) {
-        currentIndex = (currentIndex + 1) % burgerData.length;
-        updateCarousel();
-    }
+    currentIndex = (currentIndex + 1) % burgerData.length;
+    updateCarousel();
 }
 
 function prevSlide() {
-    if (!isPaused) {
-        currentIndex = (currentIndex - 1 + burgerData.length) % burgerData.length;
-        updateCarousel();
-    }
+    currentIndex = (currentIndex - 1 + burgerData.length) % burgerData.length;
+    updateCarousel();
 }
 
 function startCarousel() {
-    carouselInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+    carouselInterval = setInterval(nextSlide, 2000); // Change slide every 2 seconds
 }
 
 
@@ -166,8 +159,8 @@ window.addEventListener('load', () => {
 
 #carousel-wrapper {
     position: relative;
-    width: 300px;
-    height: 225px;
+    width: 100%;
+    height: 200px;
     margin: 0 auto;
     overflow: hidden;
     border-radius: 8px;
@@ -178,12 +171,14 @@ window.addEventListener('load', () => {
     display: flex;
     transition: transform 0.5s ease;
     height: 100%;
+    gap: 10px;
 }
 
 .carousel-slide {
-    min-width: 300px;
-    height: 225px;
+    min-width: 250px;
+    height: 200px;
     transition: transform 0.3s ease;
+    flex-shrink: 0;
 }
 
 .carousel-slide:hover {
@@ -194,7 +189,7 @@ window.addEventListener('load', () => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 0;
+    border-radius: 8px;
 }
 
 .carousel-btn {
