@@ -35,6 +35,12 @@ function parseFrontmatter(md) {
     return { attributes, body };
 }
 
+// Configure marked to allow HTML
+marked.setOptions({
+    breaks: true,
+    gfm: true
+});
+
 // Convert markdown to HTML
 function convertMarkdownToHtml(markdown) {
     return marked.parse(markdown);
