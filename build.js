@@ -38,12 +38,66 @@ function parseFrontmatter(md) {
 // Configure marked to allow HTML
 marked.setOptions({
     breaks: true,
-    gfm: true
+    gfm: true,
+    headerIds: false,
+    mangle: false
 });
+
+// Override the renderer to not escape HTML
+const renderer = new marked.Renderer();
+renderer.html = function(html) {
+    return html;
+};
+marked.use({ renderer });
 
 // Convert markdown to HTML
 function convertMarkdownToHtml(markdown) {
-    return marked.parse(markdown);
+    // Extract script tags first
+    const scriptRegex = /<script[^>]*>[\s\S]*?<\/script>/g;
+    const scripts = [];
+    let scriptCounter = 0;
+    
+    let processedMarkdown = markdown.replace(scriptRegex, (match) => {
+        const placeholder = `__SCRIPT_${scriptCounter}__`;
+        scripts[scriptCounter] = match;
+        scriptCounter++;
+        return placeholder;
+    });
+    
+    // Extract div tags
+    const divRegex = /<div[^>]*>[\s\S]*?<\/div>/g;
+    const divs = [];
+    let divCounter = 0;
+    
+    processedMarkdown = processedMarkdown.replace(divRegex, (match) => {
+        const placeholder = `__DIV_${divCounter}__`;
+        divs[divCounter] = match;
+        divCounter++;
+        return placeholder;
+    });
+    
+    // Process the markdown normally
+    let html = marked.parse(processedMarkdown);
+    
+    // Replace div placeholders - use a more specific replacement
+    divs.forEach((div, index) => {
+        const placeholder = `__DIV_${index}__`;
+        const placeholderRegex = new RegExp(`<p><strong>${placeholder}</strong></p>`, 'g');
+        html = html.replace(placeholderRegex, div);
+        // Also try direct replacement
+        html = html.replace(placeholder, div);
+    });
+    
+    // Replace script placeholders - use a more specific replacement
+    scripts.forEach((script, index) => {
+        const placeholder = `__SCRIPT_${index}__`;
+        const placeholderRegex = new RegExp(`<p><strong>${placeholder}</strong></p>`, 'g');
+        html = html.replace(placeholderRegex, script);
+        // Also try direct replacement
+        html = html.replace(placeholder, script);
+    });
+    
+    return html;
 }
 
 async function build() {
@@ -96,11 +150,23 @@ async function build() {
         // Remove the first H1 heading from content since title is in hero section
         const contentWithoutTitle = html.replace(/<h1[^>]*>.*?<\/h1>/, '');
         
-        const blogHtml = blogPostTemplate
+        // Check if this is the burger post
+        const isBurgerPost = title === 'NYC Burger List';
+        
+        let blogHtml = blogPostTemplate
             .replace(/{{content}}/g, contentWithoutTitle)
             .replace(/{{title}}/g, title)
             .replace(/{{nav}}/g, navTemplate)
             .replace(/{{footer}}/g, footerTemplate);
+        
+        // Handle conditional template logic
+        if (isBurgerPost) {
+            blogHtml = blogHtml.replace('{{#if isBurgerPost}}', '');
+            blogHtml = blogHtml.replace('{{/if}}', '');
+        } else {
+            // Remove the entire conditional block for non-burger posts
+            blogHtml = blogHtml.replace(/{{#if isBurgerPost}}[\s\S]*?{{\/if}}/g, '');
+        }
         const outputFile = file.replace('.md', '.html');
         await fs.writeFile(path.join('public/blog', outputFile), blogHtml);
         blogPosts.push({
